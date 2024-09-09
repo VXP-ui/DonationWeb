@@ -6,127 +6,70 @@
   <title>Donate to Help with Scripts</title>
   <style>
     * { box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; background-color: #1a1a1a; color: #f1f1f1; margin: 0; padding: 20px; }
-    .container { max-width: 480px; margin: 0 auto; }
-    header { text-align: center; margin-bottom: 20px; }
-    h1 { font-size: 24px; margin-bottom: 6px; }
-    .donation-section { background-color: #222222; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
-    .donation-options { display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 12px; margin-bottom: 15px; }
-    .donation-option { background-color: #333333; padding: 12px; text-align: center; border-radius: 6px; cursor: pointer; transition: transform 0.3s ease; }
-    .donation-option:hover { transform: translateY(-2px); }
-    .donation-option.selected { background-color: #007bff; color: #fff; }
-    .donation-option h3 { font-size: 16px; margin-bottom: 6px; }
-    .donation-option p { font-size: 12px; }
-    .btn { display: block; width: 100%; padding: 8px 14px; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; }
-    .btn-25 { background-color: #4CAF50; color: #fff; }
-    .btn-25:hover { background-color: #45a049; }
-    .btn-50 { background-color: #007bff; color: #fff; }
-    .btn-50:hover { background-color: #0056b3; }
-    .btn-75 { background-color: #ffc107; color: #000; }
-    .btn-75:hover { background-color: #e0a800; }
-    .btn-100 { background-color: #dc3545; color: #fff; }
-    .btn-100:hover { background-color: #c82333; }
-    .btn-150 { background-color: #6f42c1; color: #fff; }
-    .btn-150:hover { background-color: #563d7c; }
-    .btn-200 { background-color: #20c997; color: #fff; }
-    .btn-200:hover { background-color: #1ba37e; }
-    .btn-250 { background-color: #fd7e14; color: #fff; }
-    .btn-250:hover { background-color: #ce6100; }
-    .btn-300 { background-color: #17a2b8; color: #fff; }
-    .btn-300:hover { background-color: #138496; }
-    .btn-500 { background-color: #9b59b6; color: #fff; }
-    .btn-500:hover { background-color: #8e44ad; }
-    .btn-1000 { background-color: #2ecc71; color: #fff; }
-    .btn-1000:hover { background-color: #25a25a; }
-    .btn-1500 { background-color: #e67e22; color: #fff; }
-    .btn-1500:hover { background-color: #bf6516; }
-    .btn-2500 { background-color: #e74c3c; color: #fff; }
-    .btn-2500:hover { background-color: #d62c1a; }
-    .btn-5000 { background-color: #8e44ad; color: #fff; }
-    .btn-5000:hover { background-color: #7b1fa2; }
-    .btn-10000 { background-color: #2980b9; color: #fff; }
-    .btn-10000:hover { background-color: #20638f; }
-    .btn-100000 { background-color: #f39c12; color: #fff; }
-    .btn-100000:hover { background-color: #c87f0a; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a1a; color: #f1f1f1; margin: 0; padding: 20px; }
+    .container { max-width: 480px; margin: 0 auto; text-align: center; }
+    header { margin-bottom: 30px; }
+    h1 { font-size: 32px; margin-bottom: 10px; color: #00bcd4; }
+    p { font-size: 16px; margin-bottom: 20px; }
+    .donation-section { background-color: #222; padding: 30px; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); transition: background-color 0.3s; }
+    .donation-section:hover { background-color: #2a2a2a; }
+    .donation-options { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); grid-gap: 15px; margin-bottom: 15px; }
+    .donation-option { background-color: #444; padding: 15px; border-radius: 10px; cursor: pointer; transition: transform 0.3s ease, background-color 0.3s ease; position: relative; overflow: hidden; }
+    .donation-option:hover { transform: translateY(-3px); background-color: #555; }
+    .donation-option.selected { background-color: #00bcd4; color: #fff; }
+    .donation-option h3 { font-size: 18px; margin-bottom: 6px; font-weight: bold; }
+    .donation-option p { font-size: 14px; }
+    .btn { display: block; width: 100%; padding: 12px; border: none; border-radius: 5px; cursor: pointer; font-size: 18px; margin-top: 15px; background-color: #00bcd4; color: #fff; transition: background-color 0.3s ease; }
+    .btn:hover { background-color: #0097a7; }
+    footer { margin-top: 20px; font-size: 14px; color: #ccc; }
   </style>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const donationOptions = document.querySelectorAll('.donation-option');
       const donateButton = document.querySelector('.btn');
 
-        let selectedDonation = null;
+      let selectedDonation = null;
 
-  donationOptions.forEach(option => {
-    option.addEventListener('click', () => {
-      donationOptions.forEach(opt => opt.classList.remove('selected'));
-      option.classList.add('selected');
-      selectedDonation = option.querySelector('h3').textContent;
-      updateDonateButtonClass();
-    });
-  });
+      donationOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          donationOptions.forEach(opt => opt.classList.remove('selected'));
+          option.classList.add('selected');
+          selectedDonation = option.querySelector('h3').textContent;
+          updateDonateButtonClass();
+        });
+      });
 
-  function updateDonateButtonClass() {
-    const donationAmount = selectedDonation.replace(' RBX', '');
-    donateButton.className = `btn btn-${donationAmount}`;
-  }
-
-  donateButton.addEventListener('click', () => {
-    if (selectedDonation) {
-      const donationAmount = selectedDonation.replace(' RBX', '');
-      switch (donationAmount) {
-        case '25':
-          window.location.href = 'https://www.roblox.com/game-pass/898263666';
-          break;
-        case '50':
-          window.location.href = 'https://www.roblox.com/game-pass/897996985';
-          break;
-        case '75':
-          window.location.href = 'https://www.roblox.com/game-pass/898222636';
-          break;
-        case '100':
-          window.location.href = 'https://www.roblox.com/game-pass/899185471';
-          break;
-        case '150':
-          window.location.href = 'https://www.roblox.com/game-pass/899320180';
-          break;
-        case '200':
-          window.location.href = 'https://www.roblox.com/game-pass/898298561';
-          break;
-        case '250':
-          window.location.href = 'https://www.roblox.com/game-pass/898222587';
-          break;
-        case '300':
-          window.location.href = 'https://www.roblox.com/game-pass/898464141';
-          break;
-        case '500':
-          window.location.href = 'https://www.roblox.com/game-pass/898517053';
-          break;
-        case '1000':
-          window.location.href = 'https://www.roblox.com/game-pass/898104810';
-          break;
-        case '1500':
-          window.location.href = 'https://www.roblox.com/game-pass/898081911';
-          break;
-        case '2500':
-          window.location.href = 'https://www.roblox.com/game-pass/898250566';
-          break;
-        case '5000':
-          window.location.href = 'https://www.roblox.com/game-pass/898226661';
-          break;
-        case '10000':
-          window.location.href = 'https://www.roblox.com/game-pass/898061955';
-          break;
-        case '100000':
-          window.location.href = 'https://www.roblox.com/game-pass/898231555';
-          break;
-        default:
-          alert('Invalid donation amount selected.');
+      function updateDonateButtonClass() {
+        const donationAmount = selectedDonation.replace(' RBX', '');
+        donateButton.className = `btn btn-${donationAmount}`;
       }
-    } else {
-      alert('Please select a donation amount.');
-    }
-  });
-});
+
+      donateButton.addEventListener('click', () => {
+        if (selectedDonation) {
+          const donationAmount = selectedDonation.replace(' RBX', '');
+          const urlMap = {
+            '25': 'https://www.roblox.com/game-pass/898263666',
+            '50': 'https://www.roblox.com/game-pass/897996985',
+            '75': 'https://www.roblox.com/game-pass/898222636',
+            '100': 'https://www.roblox.com/game-pass/899185471',
+            '150': 'https://www.roblox.com/game-pass/899320180',
+            '200': 'https://www.roblox.com/game-pass/898298561',
+            '250': 'https://www.roblox.com/game-pass/898222587',
+            '300': 'https://www.roblox.com/game-pass/898464141',
+            '500': 'https://www.roblox.com/game-pass/898517053',
+            '1000': 'https://www.roblox.com/game-pass/898104810',
+            '1500': 'https://www.roblox.com/game-pass/898081911',
+            '2500': 'https://www.roblox.com/game-pass/898250566',
+            '5000': 'https://www.roblox.com/game-pass/898226661',
+            '10000': 'https://www.roblox.com/game-pass/898061955',
+            '100000': 'https://www.roblox.com/game-pass/898231555'
+          };
+          window.location.href = urlMap[donationAmount] || '#';
+        } else {
+          alert('Please select a donation amount.');
+        }
+      });
+    });
   </script>
 </head>
 <body>
@@ -156,6 +99,9 @@
       </div>
       <button class="btn">Donate Now</button>
     </div>
+    <footer>
+      <p>Thank you for your generosity!</p>
+    </footer>
   </div>
 </body>
 </html>
